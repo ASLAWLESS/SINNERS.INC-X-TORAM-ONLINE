@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SINNERS.INS — Statting Simulator</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.x/dist/tabler-icons.min.css">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0a0a0a;
+    --black2: #111111;
+    --black3: #1a1a1a;
+    --gray-dark: #222222;
+    --gray-mid: #333333;
+    --gray: #555555;
+    --gray-light: #888888;
+    --white: #f0ede8;
+    --white-dim: #b0ada8;
+    --red: #cc1a1a;
+    --red-dim: #8a1111;
+    --red-bright: #e62020;
+    --red-bg: rgba(204,26,26,0.1);
+    --border: rgba(255,255,255,0.07);
+    --border-red: rgba(204,26,26,0.3);
+    --radius: 4px;
+    --radius-lg: 6px;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  nav {
+    background: var(--black2);
+    border-bottom: 1px solid var(--border);
+    padding: 0 1.5rem;
+    height: 58px;
+    display: flex; align-items: center; gap: 1rem;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .logo-wrap { display: flex; align-items: center; gap: 12px; }
+  .logo-icon {
+    width: 34px; height: 34px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .logo-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .logo-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px; letter-spacing: 2px; color: var(--white); line-height: 1;
+  }
+  .logo-text span { color: var(--red); }
+
+  main { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+
+  .page-header {
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem;
+    margin-bottom: 1.75rem; border-bottom: 1px solid var(--border); padding-bottom: 1.25rem;
+  }
+  .page-title { font-family: 'Bebas Neue', sans-serif; font-size: 30px; letter-spacing: 3px; color: var(--white); line-height: 1; }
+  .page-sub { font-size: 12px; color: var(--gray-light); margin-top: 4px; letter-spacing: 1px; text-transform: uppercase; }
+
+  .card {
+    background: var(--black2);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--red);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem 1.5rem 1.5rem;
+    margin-bottom: 1.25rem;
+    position: relative;
+  }
+  .card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 1.1rem; }
+  .card-icon {
+    width: 30px; height: 30px;
+    background: var(--red-bg); border: 1px solid var(--border-red);
+    border-radius: var(--radius);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--red-bright); font-size: 15px; flex-shrink: 0;
+  }
+  .card-title { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 2px; color: var(--white); }
+
+  .form-group { margin-bottom: 0.9rem; }
+  label {
+    display: block; font-size: 11px; font-weight: 500; color: var(--gray-light);
+    letter-spacing: 1px; text-transform: uppercase; margin-bottom: 5px;
+  }
+  input[type="number"], input[type="text"], select {
+    width: 100%; padding: 9px 12px;
+    background: var(--black3); border: 1px solid var(--gray-mid); border-radius: var(--radius);
+    color: var(--white); font-family: 'Inter', sans-serif; font-size: 13px; outline: none;
+    transition: border-color 0.12s;
+  }
+  input:focus, select:focus { border-color: var(--red); }
+  select option { background: var(--black3); color: var(--white); }
+
+  .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+
+  .checkline { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--white-dim); }
+  .checkline input { width: 16px; height: 16px; accent-color: var(--red); }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 16px;
+    background: var(--red-bg); color: var(--red-bright); border: 1px solid var(--border-red);
+    border-radius: var(--radius);
+    font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600;
+    letter-spacing: 0.5px; cursor: pointer;
+  }
+  .btn:hover { background: rgba(204,26,26,0.18); }
+  .btn:disabled { opacity: 0.35; cursor: default; }
+  .btn-ghost {
+    background: var(--black3); color: var(--white-dim); border: 1px solid var(--border);
+  }
+  .btn-ghost:hover { background: var(--gray-dark); }
+  .btn-danger { color: var(--red-bright); }
+
+  .settings-toggle {
+    position: absolute; top: 12px; right: 14px;
+    background: none; border: 1px solid var(--border-red);
+    color: var(--red-bright); font-size: 11px; letter-spacing: 0.5px;
+    padding: 4px 10px; border-radius: var(--radius); cursor: pointer;
+  }
+
+  /* Modal */
+  .modal {
+    display: none; position: fixed; z-index: 200;
+    left: 0; top: 0; width: 100%; height: 100%;
+    overflow: auto; background: rgba(0,0,0,0.6);
+  }
+  .modal-content {
+    background: var(--black2); border: 1px solid var(--border-red);
+    border-radius: var(--radius-lg);
+    margin: 100px auto; padding: 1.5rem; width: 90%; max-width: 420px;
+    position: relative;
+  }
+  .close {
+    color: var(--gray-light); position: absolute; top: 10px; right: 16px;
+    font-size: 24px; font-weight: bold; cursor: pointer;
+  }
+  .close:hover { color: var(--red-bright); }
+  .modal-content table td { padding: 6px 8px; }
+
+  /* Workbench (motor original, fondo claro para mantener legibles los colores fijos del script: blue/black/red/gray) */
+  #navigation_bar {
+    background: var(--black3); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 10px; margin-bottom: 1.25rem;
+  }
+  #workbench {
+    background: var(--white); color: #111;
+    border: 1px solid var(--border-red);
+    border-radius: var(--radius-lg);
+    padding: 12px; margin-bottom: 1.25rem; overflow-x: auto;
+  }
+  #workbench table { border-collapse: collapse; }
+  #workbench td { vertical-align: top; padding: 8px; }
+  #workbench select, #workbench input[type="text"] {
+    background: #fff; color: #000; border: 1px solid #999; border-radius: 3px;
+    padding: 3px 5px; font-size: 12.5px; width: auto;
+  }
+  #workbench button {
+    background: #eee; border: 1px solid #999; border-radius: 3px;
+    padding: 5px 10px; font-size: 12px; cursor: pointer; margin: 2px;
+  }
+  #workbench button:hover:not(:disabled) { background: #ddd; }
+  #workbench button:disabled { opacity: 0.4; cursor: default; }
+
+  footer { text-align: center; color: var(--gray-light); font-size: 11px; margin-top: 1.5rem; }
+</style>
+</head>
+
+<body onload="document.getElementById('recipe_pot').value = DEFAULT_WEAPON_RECIPE_POT; App.loadSettings(); App.loadFromStorage();">
+<nav>
+  <div class="logo-wrap">
+    <div class="logo-icon"><img src="images/logo.jpeg" alt="SINNERS.INS logo"></div>
+    <div class="logo-text">SINNERS.<span>INS</span></div>
+  </div>
+</nav>
+
+<main>
+  <div class="page-header">
+    <div>
+      <div class="page-title" id="title">Statting Simulator</div>
+      <div class="page-sub">Simulador de refinado Tier-4 — Toram Online</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <button class="settings-toggle" id="myBtn">Ajustes</button>
+    <div class="card-header">
+      <div class="card-icon"><i class="ti ti-sword"></i></div>
+      <div class="card-title">Equipo</div>
+    </div>
+
+    <div class="form-row-2">
+      <div class="form-group">
+        <label for="weap_arm">Tipo de equipo</label>
+        <select id="weap_arm" onchange="if (this.value === 'w') document.getElementById('recipe_pot').value = DEFAULT_WEAPON_RECIPE_POT; else document.getElementById('recipe_pot').value = DEFAULT_ARMOR_RECIPE_POT;">
+          <option value='w'>Weapon</option>
+          <option value='a'>Armor</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="recipe_pot">Potencial de receta</label>
+        <input type="number" value=40 id='recipe_pot'>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="starting_pot">Potencial inicial</label>
+      <input type="number" value=89 id='starting_pot'>
+    </div>
+
+    <button class="btn" onclick="App.spawn()"><i class="ti ti-player-play"></i> Go!</button>
+    <button class="btn btn-ghost" onclick="show_help()"><i class="ti ti-keyboard"></i> Hotkeys</button>
+  </div>
+
+  <!-- Modal de ajustes -->
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <table>
+        <tr>
+          <td>Proficiency:</td>
+          <td><input type="number" id="proficiency" min="0" value=0></td>
+        </tr>
+        <tr>
+          <td>TEC:</td>
+          <td><input type="number" value=255 id='tec' min="0" max="255"></td>
+        </tr>
+        <tr>
+          <td>Mat Reduction Passives</td>
+          <td><input type="checkbox" id="mat_reduction" checked=true></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div id="navigation_bar" hidden></div>
+
+  <div id="workbench" hidden>
+    <table style="width: 100%; border-collapse: collapse;" border=1>
+      <tr>
+        <td rowspan=2 style="width: 50%; vertical-align: top;" valign=top>
+          <div style="position: relative; width: 100%;">
+            <div id='stat-details' style="position: absolute; color: green; font-size: 8px; top: 0px; right: 0px"></div>
+            <div id='workspace'></div>
+          </div>
+        </td>
+        <td style="width: 50%; vertical-align: top" id='material_display'></td>
+      </tr>
+      <tr>
+        <td style="vertical-align: top" id="formula_display"></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div style="display:flex; justify-content: space-between; align-items:center; flex-wrap: wrap; gap: 10px;">
+      <button class="btn btn-danger" onclick="App.reset()"><i class="ti ti-trash"></i> Reset</button>
+      <div>
+        <button class="btn btn-ghost" onclick="App.promptRename()" id="rename_button">Rename Current Stat</button>
+        <button class="btn btn-ghost" onclick="App.duplicateCurrent()" id="duplicate_button">Duplicate Current Stat</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>SINNERS.INS</footer>
+</main>
+
+<script>
+var modal = document.getElementById("myModal");
+var btn = document.getElementById("myBtn");
+var span = document.getElementsByClassName("close")[0];
+btn.onclick = function() { modal.style.display = "block"; }
+span.onclick = function() { modal.style.display = "none"; }
+window.onclick = function(event) { if (event.target == modal) modal.style.display = "none"; }
+</script>
+
+<script src="js/math.js" type="text/javascript"></script>
+<script src="js/t4stat.js" type="text/javascript"></script>
+</body>
+</html>
