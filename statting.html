@@ -152,29 +152,64 @@
   .close:hover { color: var(--red-bright); }
   .modal-content table td { padding: 6px 8px; }
 
-  /* Workbench (motor original, fondo claro para mantener legibles los colores fijos del script: blue/black/red/gray) */
+  /* Workbench (motor original) — tema rojo/negro. El script fija colores por código
+     (blue/black/gray/red/green vía style.color) pensados para fondo claro; los
+     reemplazamos con !important para adaptarlos al tema oscuro sin tocar el JS. */
   #navigation_bar {
     background: var(--black3); border: 1px solid var(--border); border-radius: var(--radius);
     padding: 10px; margin-bottom: 1.25rem;
   }
+  #navigation_bar div[style*="border: solid 1px blue"] {
+    border-color: var(--border-red) !important;
+    background: var(--black2) !important;
+  }
+  #navigation_bar div[style*="background-color: lightpink"] {
+    background: var(--red-bg) !important;
+  }
+  #navigation_bar button {
+    background: none; border: none; color: var(--white-dim);
+    font-family: 'Inter', sans-serif; font-size: 12px; cursor: pointer; padding: 4px 6px;
+  }
+  #navigation_bar button[style*="color: red"] { color: var(--red-bright) !important; }
+
   #workbench {
-    background: var(--white); color: #111;
-    border: 1px solid var(--border-red);
+    background: var(--black2); color: var(--white);
+    border: 1px solid var(--border); border-top: 2px solid var(--red);
     border-radius: var(--radius-lg);
-    padding: 12px; margin-bottom: 1.25rem; overflow-x: auto;
+    padding: 16px; margin-bottom: 1.25rem; overflow-x: auto;
   }
-  #workbench table { border-collapse: collapse; }
-  #workbench td { vertical-align: top; padding: 8px; }
+  #workbench table { border-collapse: collapse; width: 100%; }
+  #workbench table[border] { border: none !important; }
+  #workbench td { vertical-align: top; padding: 8px; border-color: var(--border) !important; }
+  #material_display table td, #material_display table th {
+    border-bottom: 1px solid var(--border); padding: 5px 8px;
+  }
+  #material_display table th { color: var(--gray-light); text-transform: uppercase; font-size: 10.5px; letter-spacing: 0.5px; }
   #workbench select, #workbench input[type="text"] {
-    background: #fff; color: #000; border: 1px solid #999; border-radius: 3px;
-    padding: 3px 5px; font-size: 12.5px; width: auto;
+    background: var(--black3); color: var(--white); border: 1px solid var(--gray-mid);
+    border-radius: 3px; padding: 4px 6px; font-size: 12.5px; width: auto; outline: none;
   }
+  #workbench select:focus, #workbench input[type="text"]:focus { border-color: var(--red); }
+  #workbench select option { background: var(--black3); color: var(--white); }
+  #workbench select option[style*="color: blue"] { color: var(--red-bright) !important; }
   #workbench button {
-    background: #eee; border: 1px solid #999; border-radius: 3px;
-    padding: 5px 10px; font-size: 12px; cursor: pointer; margin: 2px;
+    background: var(--red-bg); color: var(--red-bright); border: 1px solid var(--border-red);
+    border-radius: 3px; padding: 6px 12px; font-size: 12px; font-weight: 600;
+    cursor: pointer; margin: 2px;
   }
-  #workbench button:hover:not(:disabled) { background: #ddd; }
-  #workbench button:disabled { opacity: 0.4; cursor: default; }
+  #workbench button:hover:not(:disabled) { background: rgba(204,26,26,0.2); }
+  #workbench button:disabled { opacity: 0.35; cursor: default; }
+
+  /* Overrides de color inline que pone t4stat.js dentro del workbench */
+  #workbench input[style*="color: blue"] { color: var(--white-dim) !important; }
+  #workbench input[style*="color: black"] { color: var(--white) !important; }
+  #workbench input[style*="color: red"] { color: var(--red-bright) !important; }
+  #workbench input[style*="color: gray"] { color: var(--gray-light) !important; }
+  #workbench span[style*="color: green"] { color: #4ade80 !important; }
+  #workbench span[style*="color: gray"] { color: var(--gray-light) !important; }
+  #workbench span[style*="color: red"] { color: var(--red-bright) !important; }
+  #workbench span[style*="color: blue"] { color: var(--white-dim) !important; }
+  #stat-details[style*="color: green"] { color: #4ade80 !important; }
 
   footer { text-align: center; color: var(--gray-light); font-size: 11px; margin-top: 1.5rem; }
 </style>
