@@ -286,7 +286,10 @@
         </tr>
         <tr>
           <td>TEC:</td>
-          <td><input type="number" value=255 id='tec' min="0" max="255"></td>
+          <td>
+            <input type="number" value=255 id='tec' min="0" max="255" required aria-describedby="tec-help">
+            <small id="tec-help">Se requiere 255 para calcular el statting correctamente.</small>
+          </td>
         </tr>
         <tr>
           <td>Mat Reduction Passives</td>

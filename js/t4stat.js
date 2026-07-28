@@ -749,6 +749,11 @@ class Stat {
     }
 
     confirm() {
+        if (this.tec !== 255) {
+            alert(`El TEC debe ser 255 antes de confirmar el statting. Esta sesión tiene ${this.tec} TEC.`);
+            return;
+        }
+
         this.removeEmptySlots();
         this.step_mats = { Metal: 0, Cloth: 0, Beast: 0, Wood: 0, Medicine: 0, Mana: 0 };
         for (const slot of this.slots) {
@@ -1093,6 +1098,20 @@ class MainApp {
         localStorage.setItem('extra_settings', JSON.stringify(settings));
     }
 
+    validateTec() {
+        const tecInput = document.getElementById('tec');
+        const tec = Number(tecInput.value);
+        const isValid = Number.isInteger(tec) && tec === 255;
+
+        tecInput.setCustomValidity(isValid ? '' : 'El TEC debe ser exactamente 255.');
+        if (isValid) return true;
+
+        tecInput.reportValidity();
+        alert('Configura el TEC en 255 antes de iniciar el statting para usar el cálculo correcto.');
+        tecInput.focus();
+        return false;
+    }
+
     loadSettings() {
         let raw = localStorage.getItem('extra_settings');
 
@@ -1153,6 +1172,10 @@ class MainApp {
     }
 
     spawn(id) {
+        // Las sesiones restauradas conservan sus ajustes históricos; las nuevas
+        // siempre deben iniciar con el TEC máximo para que el cálculo sea válido.
+        if (!id && !this.validateTec()) return null;
+
         // base
         const starting_pot = document.getElementById('starting_pot').value;
         const recipe_pot = document.getElementById('recipe_pot').value;
