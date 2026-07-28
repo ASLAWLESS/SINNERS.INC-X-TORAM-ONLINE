@@ -180,8 +180,18 @@ class Slot {
 
         buffer += '</select>';
 
-        buffer += `&nbsp;&nbsp;<input autocomplete="off" type="text" maxlength=4 size=4 disabled id="input${this.slot_num}" value=0 onkeydown="App.getCurrent().slots[${this.slot_num}].onKeyPress(event)" oninput="App.getCurrent().slots[${this.slot_num}].onUpdate()" style="color: blue"></input> <span id="matcost${this.slot_num}" style="color: green; font-size: 8pt"></span>`
+        buffer += `&nbsp;&nbsp;<span class="stepper"><input autocomplete="off" type="text" maxlength=4 size=4 disabled id="input${this.slot_num}" value=0 onkeydown="App.getCurrent().slots[${this.slot_num}].onKeyPress(event)" oninput="App.getCurrent().slots[${this.slot_num}].onUpdate()" style="color: blue"></input><button type="button" class="step-btn dec" tabindex="-1" onclick="App.getCurrent().slots[${this.slot_num}].stepDown()">&minus;</button><button type="button" class="step-btn inc" tabindex="-1" onclick="App.getCurrent().slots[${this.slot_num}].stepUp()">+</button></span> <span id="matcost${this.slot_num}" style="color: green; font-size: 8pt"></span>`
         return buffer;
+    }
+
+    stepUp() {
+        if (document.getElementById(`input${this.slot_num}`).disabled) return;
+        this.changeValueBySteps(1, true);
+    }
+
+    stepDown() {
+        if (document.getElementById(`input${this.slot_num}`).disabled) return;
+        this.changeValueBySteps(-1, true);
     }
 
     onKeyPress(evt) {

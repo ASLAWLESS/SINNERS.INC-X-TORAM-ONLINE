@@ -192,6 +192,21 @@
   #workbench select:focus, #workbench input[type="text"]:focus { border-color: var(--red); }
   #workbench select option { background: var(--black3); color: var(--white); }
   #workbench select option[style*="color: blue"] { color: var(--red-bright) !important; }
+
+  .stepper { display: inline-flex; align-items: center; gap: 3px; vertical-align: middle; }
+  .stepper input[type="text"] { order: 2; width: 46px; text-align: center; }
+  .stepper .step-btn {
+    order: 3;
+    width: 22px; height: 24px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--red-bg); color: var(--red-bright); border: 1px solid var(--border-red);
+    border-radius: 3px; font-size: 14px; font-weight: 700; line-height: 1;
+    cursor: pointer; padding: 0; margin: 0 !important;
+  }
+  .stepper .step-btn.dec { order: 1; }
+  .stepper .step-btn:hover { background: rgba(204,26,26,0.25); }
+  .stepper .step-btn:active { transform: scale(0.92); }
+  .stepper input[type="text"]:disabled ~ .step-btn { opacity: 0.3; pointer-events: none; }
   #workbench button {
     background: var(--red-bg); color: var(--red-bright); border: 1px solid var(--border-red);
     border-radius: 3px; padding: 6px 12px; font-size: 12px; font-weight: 600;
