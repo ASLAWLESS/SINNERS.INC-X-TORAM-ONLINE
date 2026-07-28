@@ -709,8 +709,9 @@ class Stat {
         document.getElementById('repeat_button').disabled = !this.steps.formula.length;
     }
     getSettingsDisplay(wrapperfront = '', wrapperback = '') {
-        let settings = [];
-        if (this.tec !== 255) settings.push(this.tec + ' TEC');
+        // Mantener el TEC visible permite comprobar el valor con el que fue
+        // creada esta sesión antes de aplicar cualquier stat.
+        let settings = [this.tec + ' TEC'];
         if (this.proficiency) settings.push(this.proficiency + ' proficiency');
         if (!settings.length) return '';
 
