@@ -507,8 +507,12 @@ class Slot {
 
         // negatives have an extra multiplier
         if (change === -1) {
-            basicpot.multiply(this.stat.potential_return).multiply(0.01);
-            bonuspot.multiply(this.stat.bonus_potential_return).multiply(0.01)
+            // Estos multiplicadores dependen únicamente del TEC actual. No se
+            // reutilizan los valores guardados de una sesión anterior.
+            const potential_return = this.stat.getPotentialReturn();
+            const bonus_potential_return = potential_return / 4;
+            basicpot.multiply(potential_return).multiply(0.01);
+            bonuspot.multiply(bonus_potential_return).multiply(0.01)
         }
 
         // add the 2 different types of potential return together
@@ -617,9 +621,7 @@ class Stat {
         this.step_max_mats = 0;
 
         this.tec = parseInt(details.tec) || 0;
-
-        this.potential_return = 5 + this.tec / 10;
-        this.bonus_potential_return = this.potential_return / 4;
+        this.updatePotentialReturn();
 
         this.proficiency = parseInt(details.proficiency) || 0;
         this.mat_reduction = details.mat_reduction || false;
@@ -641,6 +643,15 @@ class Stat {
 
         let penalty = penalty_values.reduce((a, b) => a + b);
         return 1 + 0.01 * penalty;
+    }
+
+    getPotentialReturn() {
+        return 5 + this.tec / 10;
+    }
+
+    updatePotentialReturn() {
+        this.potential_return = this.getPotentialReturn();
+        this.bonus_potential_return = this.potential_return / 4;
     }
 
     getCostReduction() {
@@ -948,6 +959,9 @@ class Stat {
         this.steps.buildCondensedFormula();
 
         Object.assign(this, data.settings);
+        // potential_return y bonus_potential_return son valores derivados del
+        // TEC; pueden haber quedado desfasados en localStorage.
+        this.updatePotentialReturn();
 
         for (let step of formula) {
             this.runStepInstruction(step);
