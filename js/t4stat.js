@@ -722,7 +722,7 @@ class Stat {
     getSettingsDisplay(wrapperfront = '', wrapperback = '') {
         // Mantener el TEC visible permite comprobar el valor con el que fue
         // creada esta sesión antes de aplicar cualquier stat.
-        let settings = [this.tec + ' TEC'];
+        let settings = [this.tec + ' TEC', `Retorno: ${this.getPotentialReturn()}%`];
         if (this.proficiency) settings.push(this.proficiency + ' proficiency');
         if (!settings.length) return '';
 
