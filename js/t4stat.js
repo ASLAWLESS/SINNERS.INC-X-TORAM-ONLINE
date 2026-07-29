@@ -19,7 +19,7 @@ const OPTIONS = [
     { "name": "DEX", "mat": "Medicine", "pot": 5, "cost": 25, "cat": "Enhance Stats", "type": "u", bonus: 1},
     { "name": "DEX %", "mat": "Medicine", "pot": 10, "cost": 50, "cat": "Enhance Stats", "type": "u" },
 
-    { "name": "Natural HP Regen", "mat": "Metal", "pot": 5, "cost": 25, "cat": "Enhance HP/MP", "type": "a", bonus: 1},
+    { "name": "Natural HP Regen", "mat": "Metal", "pot": 5, "cost": 25, "cat": "Enhance HP/MP", "type": "a", bonus: 1, bonusratio: 1.2},
     { "name": "Natural HP Regen %", "mat": "Metal", "pot": 10, "cost": 50, "cat": "Enhance HP/MP", "type": "a"},
     { "name": "Natural MP Regen", "mat": "Wood", "pot": 10, "cost": 50, "cat": "Enhance HP/MP", "type": "a" , bonus: 1, bonusratio: 0.5 },
     { "name": "Natural MP Regen %", "mat": "Wood", "pot": 20, "cost": 100, "cat": "Enhance HP/MP", "type": "a" },
@@ -28,7 +28,7 @@ const OPTIONS = [
     { "name": "MaxMP", "mat": "Wood", "pot": 6, "cost": "33.49", "cat": "Enhance HP/MP", "type": "u", max: 15, max_only: true, step: 10, bonus: 10, bonusratio: 0.5 },
 
     { "name": "ATK", "mat": "Beast", "pot": 3, "cost": "16.49", "cat": "Enhance Attack", "type": "w", bonus: 1 },
-    { "name": "ATK %", "mat": "Beast", "pot": 10, "cost": 50, "cat": "Enhance Attack", "type": "w", bonus: 1, bonusratio: 0.5 },
+    { "name": "ATK %", "mat": "Beast", "pot": 10, "cost": 50, "cat": "Enhance Attack", "type": "w", bonus: 1, bonusratio: 0.6 },
     { "name": "MATK", "mat": "Wood", "pot": 3, "cost": "16.49", "cat": "Enhance Attack", "type": "w", bonus: 1 },
     { "name": "MATK %", "mat": "Wood", "pot": 10, "cost": 50, "cat": "Enhance Attack", "type": "w", bonus: 1, bonusratio: 0.5 },
     { "name": "Stability %", "mat": "Medicine", "pot": 20, "cost": 100, "cat": "Enhance Attack", "type": "u" },
@@ -36,11 +36,11 @@ const OPTIONS = [
     { "name": "Magic Pierce %", "mat": "Wood", "pot": 20, "cost": 100, "cat": "Enhance Attack", "type": "w", bonus: 1, bonusratio: 2 / 5 },
 
     { "name": "DEF", "mat": "Metal", "pot": 3, "cost": "16.49", "cat": "Enhance Defense", "type": "a", bonus: 10 },
-    { "name": "DEF %", "mat": "Metal", "pot": 10, "cost": 50, "cat": "Enhance Defense", "type": "a", bonus: 1, bonusratio: 1 / 3 },
+    { "name": "DEF %", "mat": "Metal", "pot": 10, "cost": 50, "cat": "Enhance Defense", "type": "a", bonus: 1, bonusratio: 0.4 },
     { "name": "MDEF", "mat": "Metal", "pot": 3, "cost": "16.49", "cat": "Enhance Defense", "type": "a", bonus: 10 },
     { "name": "MDEF %", "mat": "Metal", "pot": 10, "cost": 50, "cat": "Enhance Defense", "type": "a", bonus: 1, bonusratio: 1 / 3 },
     { "name": "Physical Resistance %", "mat": "Metal", "pot": 10, "cost": 50, "cat": "Enhance Defense", "type": "a", bonus: 1, bonusratio: 1 / 3 },
-    { "name": "Magical Resistance %", "mat": "Wood", "pot": 10, "cost": 50, "cat": "Enhance Defense", "type": "a", bonus: 1, bonusratio: 1 / 3 },
+    { "name": "Magical Resistance %", "mat": "Wood", "pot": 10, "cost": 50, "cat": "Enhance Defense", "type": "a", bonus: 1, bonusratio: 0.4 },
 
     { "name": "Reduce Dmg (Foe Epicenter) %", "mat": "Metal", "pot": 6, "cost": 15, "cat": "Enhance Defense", "type": "a", nonega: true, max: BONUS_STEPS },
     { "name": "Reduce Dmg (Player Epicenter) %", "mat": "Metal", "pot": 6, "cost": 15, "cat": "Enhance Defense", "type": "a", nonega: true, max: BONUS_STEPS },
@@ -55,7 +55,7 @@ const OPTIONS = [
     { "name": "Accuracy", "mat": "Medicine", "pot": 10, "cost": 50, "cat": "Enhance Accuracy", "type": "w", bonus: 2, bonusratio: 2 / 3 },
     { "name": "Accuracy %", "mat": "Medicine", "pot": 20, "cost": 100, "cat": "Enhance Accuracy", "type": "w", bonus: 1, bonusratio: 1 / 5 },
 
-    { "name": "Dodge", "mat": "Cloth", "pot": 10, "cost": 50, "cat": "Enhance Dodge", "type": "a", bonus: 2, bonusratio: 2 / 3 },
+    { "name": "Dodge", "mat": "Cloth", "pot": 10, "cost": 50, "cat": "Enhance Dodge", "type": "a", bonus: 2, bonusratio: 0.8 },
     { "name": "Dodge %", "mat": "Cloth", "pot": 20, "cost": 100, "cat": "Enhance Dodge", "type": "a" },
 
     { "name": "ASPD", "mat": "Cloth", "pot": 1, "cost": "1.49", "cat": "Enhance Speed", "type": "u", bonus: 16 },
@@ -65,15 +65,15 @@ const OPTIONS = [
 
     { "name": "Critical Rate", "mat": "Mana", "pot": 1, "cost": 5, "cat": "Enhance Critical", "type": "u", bonus: 1, max_only: true },
     { "name": "Critical Rate %", "mat": "Mana", "pot": 1, "cost": 5, "cat": "Enhance Critical", "type": "u", bonus: 1, max_only: true },
-    { "name": "Critical Damage", "mat": "Mana", "pot": 3, "cost": "16.49", "cat": "Enhance Critical", "type": "u", bonus: 1, bonusratio: 1 / 3 },
-    { "name": "Critical Damage %", "mat": "Mana", "pot": 10, "cost": 50, "cat": "Enhance Critical", "type": "u", bonus: 1, bonusratio: 1 / 8 },
+    { "name": "Critical Damage", "mat": "Mana", "pot": 3, "cost": "16.49", "cat": "Enhance Critical", "type": "u", bonus: 1, bonusratio: 0.4 },
+    { "name": "Critical Damage %", "mat": "Mana", "pot": 10, "cost": 50, "cat": "Enhance Critical", "type": "u", bonus: 1, bonusratio: 0.2 },
 
-    { "name": "% stronger against Fire", "mat": "Mana", "pot": 5, "cost": 25, "cat": "Enhance Elements", "type": "w", bonus: 1, bonusratio: 1 / 3  },
-    { "name": "% stronger against Water", "mat": "Mana", "pot": 5, "cost": 25, "cat": "Enhance Elements", "type": "w", bonus: 1, bonusratio: 1 / 3  },
-    { "name": "% stronger against Wind", "mat": "Mana", "pot": 5, "cost": 25, "cat": "Enhance Elements", "type": "w", bonus: 1, bonusratio: 1 / 3  },
-    { "name": "% stronger against Earth", "mat": "Mana", "pot": 5, "cost": 25, "cat": "Enhance Elements", "type": "w", bonus: 1, bonusratio: 1 / 3  },
-    { "name": "% stronger against Light", "mat": "Mana", "pot": 5, "cost": 25, "cat": "Enhance Elements", "type": "w", bonus: 1, bonusratio: 1 / 3  },
-    { "name": "% stronger against Dark", "mat": "Mana", "pot": 5, "cost": 25, "cat": "Enhance Elements", "type": "w", bonus: 1, bonusratio: 1 / 3  },
+    { "name": "% stronger against Fire", "mat": "Mana", "pot": 5, "cost": 25, "cat": "Enhance Elements", "type": "w", bonus: 1, bonusratio: 0.4  },
+    { "name": "% stronger against Water", "mat": "Mana", "pot": 5, "cost": 25, "cat": "Enhance Elements", "type": "w", bonus: 1, bonusratio: 0.4  },
+    { "name": "% stronger against Wind", "mat": "Mana", "pot": 5, "cost": 25, "cat": "Enhance Elements", "type": "w", bonus: 1, bonusratio: 0.4  },
+    { "name": "% stronger against Earth", "mat": "Mana", "pot": 5, "cost": 25, "cat": "Enhance Elements", "type": "w", bonus: 1, bonusratio: 0.4  },
+    { "name": "% stronger against Light", "mat": "Mana", "pot": 5, "cost": 25, "cat": "Enhance Elements", "type": "w", bonus: 1, bonusratio: 0.4  },
+    { "name": "% stronger against Dark", "mat": "Mana", "pot": 5, "cost": 25, "cat": "Enhance Elements", "type": "w", bonus: 1, bonusratio: 0.4  },
     { "name": "Fire resistance %", "mat": "Mana", "pot": 5, "cost": 25, "cat": "Enhance Elements", "type": "a", bonus: 1, bonusratio: 2 / 3 },
     { "name": "Water resistance %", "mat": "Mana", "pot": 5, "cost": 25, "cat": "Enhance Elements", "type": "a", bonus: 1, bonusratio: 2 / 3 },
     { "name": "Wind resistance %", "mat": "Mana", "pot": 5, "cost": 25, "cat": "Enhance Elements", "type": "a", bonus: 1, bonusratio: 2 / 3 },
@@ -963,59 +963,9 @@ class Stat {
         // TEC; pueden haber quedado desfasados en localStorage.
         this.updatePotentialReturn();
 
-        this.recalculateLoadedFormula(formula);
-    }
-
-    recalculateLoadedFormula(formula) {
-        // Los pot_before/pot_after del almacenamiento son resultados, no datos
-        // fuente. Se reconstruyen desde las instrucciones para no conservar un
-        // cálculo hecho con un TEC anterior.
-        this.pot = this.starting_pot;
-        this.future_pot = this.pot;
-        this.finished = false;
-        this.mats = { Metal: 0, Cloth: 0, Beast: 0, Wood: 0, Medicine: 0, Mana: 0 };
-        this.max_mats = 0;
-
-        for (const step of formula) {
-            for (const [slot_num, delta_steps, stat_id] of step.code) {
-                const slot = this.slots[slot_num];
-
-                if (stat_id !== null && stat_id !== 0) {
-                    slot.stat_data_id = stat_id;
-                    slot.stat_data = deep_clone(OPTIONS[stat_id - 1]);
-                    slot.stat_name = slot.stat_data.name;
-                    slot.new_stat = false;
-                }
-
-                slot.futureSteps = slot.currentSteps + delta_steps;
-                slot.futureStat = slot.stepsToStat(slot.futureSteps);
-            }
-
-            this.onUpdate();
-            step.pot_before = this.pot;
-            step.pot_after = this.future_pot;
-
-            for (const slot of this.slots) {
-                if (slot.currentSteps === slot.futureSteps) continue;
-                slot.currentSteps = slot.futureSteps;
-                slot.currentStat = slot.futureStat;
-            }
-
-            for (const mat in step.step_mats) this.mats[mat] += step.step_mats[mat];
-            this.max_mats = Math.max(this.max_mats, step.max_mats_after || 0);
-            this.pot = this.future_pot;
+        for (let step of formula) {
+            this.runStepInstruction(step);
         }
-
-        this.finished = this.slots.every(slot => slot.stat_name) || this.future_pot <= 0
-            ? this.getSuccessRate()
-            : false;
-
-        for (const slot of this.slots) slot.syncDisplayWithValues();
-        if (this.finished) this.lockAllSlots();
-        this.steps.buildCondensedFormula();
-        this.updateMaterialCosts();
-        this.updateFormulaDisplay();
-        this.updatePotentialSuccessDisplay();
     }
 
     runStepInstruction(instruction) {
