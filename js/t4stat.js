@@ -963,9 +963,59 @@ class Stat {
         // TEC; pueden haber quedado desfasados en localStorage.
         this.updatePotentialReturn();
 
-        for (let step of formula) {
-            this.runStepInstruction(step);
+        this.recalculateLoadedFormula(formula);
+    }
+
+    recalculateLoadedFormula(formula) {
+        // Los pot_before/pot_after del almacenamiento son resultados, no datos
+        // fuente. Se reconstruyen desde las instrucciones para no conservar un
+        // cálculo hecho con un TEC anterior.
+        this.pot = this.starting_pot;
+        this.future_pot = this.pot;
+        this.finished = false;
+        this.mats = { Metal: 0, Cloth: 0, Beast: 0, Wood: 0, Medicine: 0, Mana: 0 };
+        this.max_mats = 0;
+
+        for (const step of formula) {
+            for (const [slot_num, delta_steps, stat_id] of step.code) {
+                const slot = this.slots[slot_num];
+
+                if (stat_id !== null && stat_id !== 0) {
+                    slot.stat_data_id = stat_id;
+                    slot.stat_data = deep_clone(OPTIONS[stat_id - 1]);
+                    slot.stat_name = slot.stat_data.name;
+                    slot.new_stat = false;
+                }
+
+                slot.futureSteps = slot.currentSteps + delta_steps;
+                slot.futureStat = slot.stepsToStat(slot.futureSteps);
+            }
+
+            this.onUpdate();
+            step.pot_before = this.pot;
+            step.pot_after = this.future_pot;
+
+            for (const slot of this.slots) {
+                if (slot.currentSteps === slot.futureSteps) continue;
+                slot.currentSteps = slot.futureSteps;
+                slot.currentStat = slot.futureStat;
+            }
+
+            for (const mat in step.step_mats) this.mats[mat] += step.step_mats[mat];
+            this.max_mats = Math.max(this.max_mats, step.max_mats_after || 0);
+            this.pot = this.future_pot;
         }
+
+        this.finished = this.slots.every(slot => slot.stat_name) || this.future_pot <= 0
+            ? this.getSuccessRate()
+            : false;
+
+        for (const slot of this.slots) slot.syncDisplayWithValues();
+        if (this.finished) this.lockAllSlots();
+        this.steps.buildCondensedFormula();
+        this.updateMaterialCosts();
+        this.updateFormulaDisplay();
+        this.updatePotentialSuccessDisplay();
     }
 
     runStepInstruction(instruction) {
